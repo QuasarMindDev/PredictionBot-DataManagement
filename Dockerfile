@@ -8,7 +8,6 @@ WORKDIR /src
 COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement.csproj", "PredictionBot-DataManagement/"]
 COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement-Application.csproj", "PredictionBot-DataManagement-Application/"]
 COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement-Infrastructure.csproj", "PredictionBot-DataManagement-Infrastructure/"]
-COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement-Domain.csproj", "PredictionBot-DataManagement-Domain/"]
 
 RUN dotnet restore "PredictionBot-DataManagement/PredictionBot-DataManagement.csproj"
 COPY . .
