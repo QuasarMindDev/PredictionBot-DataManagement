@@ -6,8 +6,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement.csproj", "PredictionBot-DataManagement/"]
-COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement-Application.csproj", "PredictionBot-DataManagement-Application/"]
-COPY ["PredictionBot-DataManagement/PredictionBot-DataManagement-Infrastructure.csproj", "PredictionBot-DataManagement-Infrastructure/"]
+COPY ["PredictionBot-DataManagement-Application/PredictionBot-DataManagement-Application.csproj", "PredictionBot-DataManagement-Application/"]
+COPY ["PredictionBot-DataManagement-Infrastructure/PredictionBot-DataManagement-Infrastructure.csproj", "PredictionBot-DataManagement-Infrastructure/"]
+COPY ["PredictionBot-DataManagement-Domain/PredictionBot-DataManagement-Domain.csproj", "PredictionBot-DataManagement-Domain/"]
 
 RUN dotnet restore "PredictionBot-DataManagement/PredictionBot-DataManagement.csproj"
 COPY . .
