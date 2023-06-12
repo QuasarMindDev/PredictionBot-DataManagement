@@ -1,8 +1,12 @@
-﻿namespace PredictionBot_DataManagement_Domain.Models
+﻿namespace PredictionBot_DataManagement_Domain.Models;
+
+public class Currency
 {
-    public class Currency
-    {
-        public Guid CurrencyId { get; set; }
-        public string CurrencySymbol { get; set; }
-    }
+    public string CurrencyId { get; set; } = null!;
+
+    public string CurrencyName { get; set; } = null!;
+
+    public string CurrencySymbol { get; set; } = null!;
+
+    public virtual ICollection<Symbol> Symbols { get; set; } = new List<Symbol>();
 }

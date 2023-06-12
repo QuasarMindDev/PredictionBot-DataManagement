@@ -1,11 +1,12 @@
-﻿namespace PredictionBot_DataManagement_Domain.Models
+﻿namespace PredictionBot_DataManagement_Domain.Models;
+
+public class CalculatedParametersHistoricalData
 {
-    public class CalculatedParametersHistoricalData
-    {
-        public Guid CalculatedParameterId { get; set; }
-        public string CalculatedValue { get; set; }
-        public DateTime EndDate { get; set; }
-        public Parameters ParameterId { get; set; }
-        public DateTime StartDate { get; set; }
-    }
+    public string CalculatedParameterId { get; set; } = null!;
+    public virtual ICollection<CalculatedParametersHistoricalDataMapping> CalculatedParametersHistoricalDataMappings { get; set; } = new List<CalculatedParametersHistoricalDataMapping>();
+    public float CalculatedValue { get; set; }
+    public DateTime EndDate { get; set; }
+    public virtual Parameter Parameter { get; set; } = null!;
+    public string ParameterId { get; set; } = null!;
+    public DateTime StartDate { get; set; }
 }

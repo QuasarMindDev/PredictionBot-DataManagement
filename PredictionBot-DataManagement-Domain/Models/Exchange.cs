@@ -1,9 +1,11 @@
-﻿namespace PredictionBot_DataManagement_Domain.Models
+﻿namespace PredictionBot_DataManagement_Domain.Models;
+
+public class Exchange
 {
-    public class Exchange
-    {
-        public Guid ExchangeId { get; set; }
-        public string ExchangeName { get; set; }
-        public string Timezone { get; set; }
-    }
+    public string ExchangeId { get; set; } = null!;
+
+    public string ExchangeName { get; set; } = null!;
+
+    public virtual ICollection<Symbol> Symbols { get; set; } = new List<Symbol>();
+    public string Timezone { get; set; } = null!;
 }

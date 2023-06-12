@@ -1,8 +1,8 @@
-﻿namespace PredictionBot_DataManagement_Domain.Models
+﻿namespace PredictionBot_DataManagement_Domain.Models;
+
+public class Interval
 {
-    public class Interval
-    {
-        public Guid IntervalId { get; set; }
-        public string IntervalName { get; set; }
-    }
+    public virtual ICollection<HistoricalData> HistoricalData { get; set; } = new List<HistoricalData>();
+    public string IntervalId { get; set; } = null!;
+    public string IntervalName { get; set; } = null!;
 }
