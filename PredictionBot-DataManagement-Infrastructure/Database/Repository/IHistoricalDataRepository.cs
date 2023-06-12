@@ -1,5 +1,4 @@
-﻿using PredictionBot_DataManagement_Domain.Dtos;
-using PredictionBot_DataManagement_Domain.Models;
+﻿using PredictionBot_DataManagement_Domain.Models;
 
 namespace PredictionBot_DataManagement_Infrastructure.Database.Repository
 {

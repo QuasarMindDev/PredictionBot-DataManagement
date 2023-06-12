@@ -1,15 +1,9 @@
 ﻿using DataModuleInfrastructure.Models;
 using DataModuleInfrastructure.Services;
-using Mapster;
 using Microsoft.Extensions.Options;
 using PredictionBot_DataManagement_Domain.Dtos;
-using PredictionBot_DataManagement_Domain.Models;
-using PredictionBot_DataManagement_Infrastructure.Database.Repository;
 using PredictionBot_DataManagement_Infrastructure.Services;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Runtime.InteropServices;
-using System.Text.Json;
 
 namespace TwelveDataServices
 {
