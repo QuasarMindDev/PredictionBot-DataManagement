@@ -2,7 +2,7 @@
 
 public class Exchange
 {
-    public string ExchangeId { get; set; } = null!;
+    public string ExchangeId { get; set; } = Guid.NewGuid().ToString();
 
     public string ExchangeName { get; set; } = null!;
 

@@ -6,5 +6,5 @@ public class CalculatedParametersHistoricalDataMapping
     public string CalculatedParameterId { get; set; } = null!;
     public virtual HistoricalData Data { get; set; } = null!;
     public string DataId { get; set; } = null!;
-    public string MappingId { get; set; } = null!;
+    public string MappingId { get; set; } = Guid.NewGuid().ToString();
 }

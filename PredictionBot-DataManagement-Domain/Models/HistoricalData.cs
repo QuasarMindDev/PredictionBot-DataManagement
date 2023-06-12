@@ -4,7 +4,7 @@ public class HistoricalData
 {
     public virtual ICollection<CalculatedParametersHistoricalDataMapping> CalculatedParametersHistoricalDataMappings { get; set; } = new List<CalculatedParametersHistoricalDataMapping>();
     public float ClosePrice { get; set; }
-    public string DataId { get; set; } = null!;
+    public string DataId { get; set; } = Guid.NewGuid().ToString();
     public DateTime Datetime { get; set; }
     public float HighPrice { get; set; }
     public virtual Interval Interval { get; set; } = null!;

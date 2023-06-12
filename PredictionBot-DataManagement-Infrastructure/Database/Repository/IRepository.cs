@@ -12,7 +12,9 @@ namespace PredictionBot_DataManagement_Infrastructure.Database.Repository
 
         IEnumerable<T> GetAll();
 
-        T GetById(int id);
+        IEnumerable<T> GetAll(Func<T, bool> filter);
+
+        T? GetById(string id);
 
         void Remove(T entity);
 

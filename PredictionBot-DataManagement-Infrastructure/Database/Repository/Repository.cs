@@ -12,39 +12,50 @@ namespace PredictionBot_DataManagement_Infrastructure.Database.Repository
             _context = context;
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             _context.Set<T>().Add(entity);
+            _context.SaveChanges();
         }
 
-        public void AddRange(IEnumerable<T> entities)
+        public virtual void AddRange(IEnumerable<T> entities)
         {
             _context.Set<T>().AddRange(entities);
+            _context.SaveChanges();
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public virtual IEnumerable<T> GetAll(Func<T, bool> filter)
+        {
+            return _context.Set<T>()
+                .Where(filter)
+                .ToList();
+        }
+
+        public virtual T? GetById(string id)
         {
             return _context.Set<T>().Find(id);
         }
 
-        public void Remove(T entity)
+        public virtual void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
+            _context.SaveChanges();
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public virtual void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
+            _context.SaveChanges();
         }
     }
 }

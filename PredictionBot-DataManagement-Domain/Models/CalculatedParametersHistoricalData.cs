@@ -2,7 +2,7 @@
 
 public class CalculatedParametersHistoricalData
 {
-    public string CalculatedParameterId { get; set; } = null!;
+    public string CalculatedParameterId { get; set; } = Guid.NewGuid().ToString();
     public virtual ICollection<CalculatedParametersHistoricalDataMapping> CalculatedParametersHistoricalDataMappings { get; set; } = new List<CalculatedParametersHistoricalDataMapping>();
     public float CalculatedValue { get; set; }
     public DateTime EndDate { get; set; }
