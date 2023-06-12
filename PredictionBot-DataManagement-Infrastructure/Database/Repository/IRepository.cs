@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace PredictionBot_DataManagement_Domain.Repository
+namespace PredictionBot_DataManagement_Infrastructure.Database.Repository
 {
     public interface IRepository<T> where T : class
     {
