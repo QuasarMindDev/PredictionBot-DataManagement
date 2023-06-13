@@ -2,7 +2,7 @@
 
 public class Currency
 {
-    public string CurrencyId { get; set; } = null!;
+    public string CurrencyId { get; set; } = Guid.NewGuid().ToString();
 
     public string CurrencyName { get; set; } = null!;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,6 +7,34 @@ namespace PredictionBot_DataManagement_Infrastructure.Migrations
     /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "calculatedparametershistoricaldatamapping");
+
+            migrationBuilder.DropTable(
+                name: "calculatedparametershistoricaldata");
+
+            migrationBuilder.DropTable(
+                name: "historicaldata");
+
+            migrationBuilder.DropTable(
+                name: "parameters");
+
+            migrationBuilder.DropTable(
+                name: "interval");
+
+            migrationBuilder.DropTable(
+                name: "symbol");
+
+            migrationBuilder.DropTable(
+                name: "currency");
+
+            migrationBuilder.DropTable(
+                name: "exchange");
+        }
+
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,34 +251,6 @@ namespace PredictionBot_DataManagement_Infrastructure.Migrations
                 name: "exchange_id",
                 table: "symbol",
                 column: "exchange_id");
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "calculatedparametershistoricaldatamapping");
-
-            migrationBuilder.DropTable(
-                name: "calculatedparametershistoricaldata");
-
-            migrationBuilder.DropTable(
-                name: "historicaldata");
-
-            migrationBuilder.DropTable(
-                name: "parameters");
-
-            migrationBuilder.DropTable(
-                name: "interval");
-
-            migrationBuilder.DropTable(
-                name: "symbol");
-
-            migrationBuilder.DropTable(
-                name: "currency");
-
-            migrationBuilder.DropTable(
-                name: "exchange");
         }
     }
 }

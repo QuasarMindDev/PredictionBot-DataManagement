@@ -103,11 +103,9 @@ public class DataManagementDbContext : DbContext
                 .HasColumnName("currency_id");
             entity.Property(e => e.CurrencyName)
                 .HasMaxLength(250)
-                .HasDefaultValueSql("''")
                 .HasColumnName("currency_name");
             entity.Property(e => e.CurrencySymbol)
                 .HasMaxLength(250)
-                .HasDefaultValueSql("''")
                 .HasColumnName("currency_symbol");
         });
 
