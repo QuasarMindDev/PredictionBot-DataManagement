@@ -11,7 +11,6 @@ namespace PredictionBot_DataManagement_Infrastructure_UnitTest
         [Fact]
         public void GetAll_ReturnsDataFromMockContext()
         {
-            // Arrange: Preparar el escenario para la prueba
             var testData = new List<HistoricalData>
             {
                 new HistoricalData
@@ -52,10 +51,8 @@ namespace PredictionBot_DataManagement_Infrastructure_UnitTest
                 mockSymbolRepository.Object,
                 mockIntervalRepository.Object);
 
-            // Act: Llamar al método que se está probando
             var result = repository.GetAll();
 
-            // Assert: Verificar si se obtienen los datos esperados del mock del contexto
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
             Assert.Equal("XYZ", result.First().SymbolId);
