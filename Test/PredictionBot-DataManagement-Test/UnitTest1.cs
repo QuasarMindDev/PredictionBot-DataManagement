@@ -1,4 +1,5 @@
 namespace PredictionBot_DataManagement_Test;
+
 public class UnitTest1
 {
     [Fact]

@@ -7,7 +7,6 @@ public class UnitTest1
     public void NewHistoricalDataExists()
     {
         var historicalData = new HistoricalData();
-
         Assert.NotNull(historicalData);
         Assert.IsType<HistoricalData>(historicalData);
     }
