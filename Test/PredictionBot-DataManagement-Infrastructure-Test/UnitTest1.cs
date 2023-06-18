@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Database;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using PredictionBot_DataManagement_Domain.Models;
 using PredictionBot_DataManagement_Infrastructure.Database.Repository;
-using Xunit;
-using Database;
 
 namespace PredictionBot_DataManagement_Infrastructure_UnitTest
 {

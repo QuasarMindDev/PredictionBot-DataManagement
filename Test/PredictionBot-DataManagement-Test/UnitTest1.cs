@@ -5,8 +5,7 @@ public class UnitTest1
     [Fact]
     public void Test1()
     {
-        var result = "Este Test pertenece a la capa de aplicacion";
-
-        Assert.Equal("Este Test pertenece a la capa de aplicacion", result);
+        var result = "This Test belongs to the application layer";
+        Assert.Equal("This Test belongs to the application layer", result);
     }
 }

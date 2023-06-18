@@ -1,4 +1,5 @@
 using PredictionBot_DataManagement_Domain.Models;
+
 namespace PredictionBot_DataManagement_Domain_Test;
 
 public class UnitTest1
