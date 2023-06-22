@@ -4,13 +4,14 @@ using Moq;
 using PredictionBot_DataManagement_Domain.Models;
 using PredictionBot_DataManagement_Infrastructure.Database.Repository;
 
-namespace PredictionBot_DataManagement_Infrastructure_UnitTest
+namespace PredictionBot_DataManagement_Infrastructure_Test.Database.Repository
 {
     public class HistoricalDataRepositoryTests
     {
         [Fact]
         public void GetAll_ReturnsDataFromMockContext()
         {
+            // Arrange
             var testData = new List<HistoricalData>
             {
                 new HistoricalData
@@ -51,8 +52,10 @@ namespace PredictionBot_DataManagement_Infrastructure_UnitTest
                 mockSymbolRepository.Object,
                 mockIntervalRepository.Object);
 
+            // Act
             var result = repository.GetAll();
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
             Assert.Equal("XYZ", result.First().SymbolId);
