@@ -2,6 +2,7 @@
 using DataModuleInfrastructure.Services;
 using Microsoft.Extensions.Options;
 using PredictionBot_DataManagement_Domain.Dtos;
+using PredictionBot_DataManagement_Domain.Exceptions;
 using PredictionBot_DataManagement_Infrastructure.Services;
 using System.Net.Http.Json;
 
@@ -24,30 +25,24 @@ namespace TwelveDataServices
         {
             string url = $"{_twelveDataOptions.Url}time_series?symbol={currency}&interval={interval}&apikey={_twelveDataOptions.Token}&outputsize=100";
 
-            try
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Failed to retrieve exchange rate data from Twelve Data. StatusCode={response.StatusCode}");
-                }
-
-                var historicalData = await response.Content.ReadFromJsonAsync<HistoricalDataDto>();
-
-                if (historicalData == null || historicalData.Status != "ok")
-                {
-                    throw new Exception("Failed to retrieve exchange rate data from Twelve Data. No data returned.");
-                }
-
-                _historicalDataService.CreateHistoricalData(historicalData);
-
-                return historicalData;
+                throw new HttpRequestException($"Failed to retrieve exchange rate data from Twelve Data. StatusCode={response.StatusCode}");
             }
-            catch (HttpRequestException ex)
+
+            var historicalData = await response.Content.ReadFromJsonAsync<HistoricalDataDto>();
+
+            if (historicalData == null || historicalData.Status != "ok")
             {
-                throw new Exception("Failed to retrieve exchange rate data from Twelve Data", ex);
+                throw new DataCollectionException("Failed to retrieve exchange rate data from Twelve Data. No data returned.");
             }
+
+            _historicalDataService.CreateHistoricalData(historicalData);
+
+            return historicalData;
+
         }
     }
 }
