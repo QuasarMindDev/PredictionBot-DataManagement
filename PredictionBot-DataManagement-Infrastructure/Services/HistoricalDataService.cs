@@ -41,17 +41,17 @@ namespace PredictionBot_DataManagement_Infrastructure.Services
 
         public async Task<HistoricalDataDatabaseDto> GetHistoricalData(HistoricalDataRequestDto historicalDataRequest)
         {
-            var medatadataDatabaseValue = (await _metadataRepository.FindAsync(item => item.Symbol == historicalDataRequest.Symbol &&
+            var metadataDatabaseValue = (await _metadataRepository.FindAsync(item => item.Symbol == historicalDataRequest.Symbol &&
                                                                        item.Interval == historicalDataRequest.Interval &&
                                                                        item.Exchange == historicalDataRequest.Exchange)).FirstOrDefault()
                                                                        ?? throw new KeyNotFoundException("Metadata not found");
-            var marketData = await _marketDataRepository.FindAsync(item => item.MetadataId == medatadataDatabaseValue.Id &&
+            var marketData = await _marketDataRepository.FindAsync(item => item.MetadataId == metadataDatabaseValue.Id &&
                                                                             item.Datetime >= DateTime.Parse(historicalDataRequest.InitialDate) &&
                                                                             item.Datetime <= DateTime.Parse(historicalDataRequest.FinalDate));
 
             return new HistoricalDataDatabaseDto
             {
-                Metadata = medatadataDatabaseValue,
+                Metadata = metadataDatabaseValue,
                 MarketData = marketData
             };
         }

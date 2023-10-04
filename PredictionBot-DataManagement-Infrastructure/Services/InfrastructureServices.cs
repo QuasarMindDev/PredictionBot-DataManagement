@@ -32,6 +32,7 @@ namespace PredictionBot_DataManagement_Infrastructure.Services
         {
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IMarketDataRepository, MarketDataRepository>();
+            services.AddTransient<IMetadataRepository, MetadataDataRepository>();
             return services;
         }
 
@@ -45,8 +46,6 @@ namespace PredictionBot_DataManagement_Infrastructure.Services
         private static IServiceCollection AddDataFetchingServices(IServiceCollection services)
         {
             services.AddScoped<ITwelveDataService, TwelveDataService>();
-            services.AddScoped<IMarketDataRepository, MarketDataRepository>();
-            services.AddScoped<IMetadataRepository, MetadataDataRepository>();
             services.AddScoped<IHistoricalDataService, HistoricalDataService>();
             return services;
         }

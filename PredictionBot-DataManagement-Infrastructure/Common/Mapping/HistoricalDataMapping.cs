@@ -9,11 +9,11 @@ namespace PredictionBot_DataManagement_Infrastructure.Common.Mapping
         public void Register(TypeAdapterConfig config)
         {
             MapDateTime(config);
-            MapSymbol(config);
-            MapExchange(config);
+            MapMetadata(config);
+            MapMarketData(config);
         }
 
-        private static void MapSymbol(TypeAdapterConfig config)
+        private static void MapMetadata(TypeAdapterConfig config)
         {
             config.NewConfig<Meta, Metadata>()
                 .Map(dest => dest.Symbol, src => src.Symbol)
@@ -24,7 +24,7 @@ namespace PredictionBot_DataManagement_Infrastructure.Common.Mapping
                 .Map(dest => dest.AssetClassType, src => src.AssetClassType);
         }
 
-        private static void MapExchange(TypeAdapterConfig config)
+        private static void MapMarketData(TypeAdapterConfig config)
         {
             config.NewConfig<Value, MarketData>()
                 .Map(dest => dest.Open, src => src.Open)
