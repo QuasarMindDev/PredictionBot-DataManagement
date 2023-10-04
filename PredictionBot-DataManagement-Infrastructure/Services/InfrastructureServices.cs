@@ -1,10 +1,14 @@
-﻿using Database;
-using DataModuleInfrastructure.Services;
+﻿using DataModuleInfrastructure.Services;
+using FluentValidation;
 using Mapster;
 using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PredictionBot_DataManagement_Domain.Commons;
+using PredictionBot_DataManagement_Domain.Dtos.HistoricalData;
+using PredictionBot_DataManagement_Domain.Models.HistoricalData;
+using PredictionBot_DataManagement_Infrastructure.Common;
+using PredictionBot_DataManagement_Infrastructure.Common.Validations.HistoricalData;
+using PredictionBot_DataManagement_Infrastructure.Database;
 using PredictionBot_DataManagement_Infrastructure.Database.Repository;
 using System.Reflection;
 using TwelveDataServices;
@@ -13,10 +17,12 @@ namespace PredictionBot_DataManagement_Infrastructure.Services
 {
     public static class InfrastructureServices
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            AddDatabaseServices(services, configuration);
+            AddValidators(services);
+            AddDatabaseServices(services);
             AddDatabaseRepositories(services);
+            AddHttpClients(services);
             AddDataFetchingServices(services);
             AddMapperServices(services);
             return services;
@@ -25,37 +31,36 @@ namespace PredictionBot_DataManagement_Infrastructure.Services
         private static IServiceCollection AddDatabaseRepositories(IServiceCollection services)
         {
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<ICalculatedParametersHistoricalDataRepository, CalculatedParametersHistoricalDataRepository>();
-            services.AddTransient<ICalculatedParametersHistoricalDataMappingRepository, CalculatedParametersHistoricalDataMappingRepository>();
-            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
-            services.AddTransient<IExchangeRepository, ExchangeRepository>();
-            services.AddTransient<IHistoricalDataRepository, HistoricalDataRepository>();
-            services.AddTransient<IIntervalRepository, IntervalRepository>();
-            services.AddTransient<IParameterRepository, ParameterRepository>();
-            services.AddTransient<ISymbolRepository, SymbolRepository>();
+            services.AddTransient<IMarketDataRepository, MarketDataRepository>();
+            services.AddTransient<IMetadataRepository, MetadataDataRepository>();
             return services;
         }
 
-        private static IServiceCollection AddDatabaseServices(IServiceCollection services, IConfiguration configuration)
+        private static IServiceCollection AddDatabaseServices(IServiceCollection services)
         {
-            var connectionString = configuration.GetConnectionString("DataManagementDbConnection");
-            services.AddDbContext<DataManagementDbContext>(options => options.UseMySql(connectionString,
-                                                                      ServerVersion.AutoDetect(connectionString),
-                                                                      context => context.MigrationsAssembly(typeof(DataManagementDbContext).Assembly.FullName)));
-
-            var serviceProvider = services.BuildServiceProvider();
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<DataManagementDbContext>().Database.EnsureCreated();
-            }
+            services.AddSingleton<IMongoContext, MongoDbContext>();
+            services.AddScoped<IDatabaseService, DatabaseService>();
             return services;
         }
 
         private static IServiceCollection AddDataFetchingServices(IServiceCollection services)
         {
-            services.AddHttpClient("GetData");
             services.AddScoped<ITwelveDataService, TwelveDataService>();
             services.AddScoped<IHistoricalDataService, HistoricalDataService>();
+            return services;
+        }
+
+        private static IServiceCollection AddHttpClients(IServiceCollection services)
+        {
+            services.AddHttpClient(Constant.GetDataHttpClientName);
+            return services;
+        }
+
+        private static IServiceCollection AddValidators(IServiceCollection services)
+        {
+            services.AddScoped<IValidator<HistoricalDataRequestDto>, HistoricalDataRequestValidator>();
+            services.AddScoped<IValidator<Metadata>, MetadataValidator>();
+            services.AddScoped<IValidator<MarketData>, MarketDataValidator>();
             return services;
         }
 

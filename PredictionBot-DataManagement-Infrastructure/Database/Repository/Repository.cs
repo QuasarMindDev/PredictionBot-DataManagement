@@ -1,61 +1,55 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MongoDB.Driver;
 using System.Linq.Expressions;
 
 namespace PredictionBot_DataManagement_Infrastructure.Database.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly DbContext _context;
+        private readonly IMongoCollection<T> _databaseCollection;
 
-        public Repository(DbContext context)
+        public Repository(IMongoDatabase database, string collectionName)
         {
-            _context = context;
+            _databaseCollection = database.GetCollection<T>(collectionName);
         }
 
-        public virtual void Add(T entity)
+        public virtual async Task AddAsync(T entity)
         {
-            _context.Set<T>().Add(entity);
-            _context.SaveChanges();
+            await _databaseCollection.InsertOneAsync(entity);
         }
 
-        public virtual void AddRange(IEnumerable<T> entities)
+        public virtual async Task AddRangeAsync(IEnumerable<T> entities)
         {
-            _context.Set<T>().AddRange(entities);
-            _context.SaveChanges();
+            await _databaseCollection.InsertManyAsync(entities);
         }
 
-        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
         {
-            return _context.Set<T>().Where(expression);
+            return (await _databaseCollection.FindAsync(expression)).ToList();
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _context.Set<T>().ToList();
+            return (await _databaseCollection.FindAsync(_ => true)).ToList();
         }
 
-        public virtual IEnumerable<T> GetAll(Func<T, bool> filter)
+        public virtual async Task RemoveOneAsync(Expression<Func<T, bool>> expression)
         {
-            return _context.Set<T>()
-                .Where(filter)
-                .ToList();
+            await _databaseCollection.FindOneAndDeleteAsync(expression);
         }
 
-        public virtual T? GetById(string id)
+        public virtual async Task RemoveManyAsync(Expression<Func<T, bool>> expression)
         {
-            return _context.Set<T>().Find(id);
+            await _databaseCollection.DeleteManyAsync(expression);
         }
 
-        public virtual void Remove(T entity)
+        public virtual async Task UpdateOneAsync(Expression<Func<T, bool>> expression, UpdateDefinition<T> update)
         {
-            _context.Set<T>().Remove(entity);
-            _context.SaveChanges();
+            await _databaseCollection.UpdateOneAsync(expression, update);
         }
 
-        public virtual void RemoveRange(IEnumerable<T> entities)
+        public virtual async Task UpdateManyAsync(Expression<Func<T, bool>> expression, UpdateDefinition<T> update)
         {
-            _context.Set<T>().RemoveRange(entities);
-            _context.SaveChanges();
+            await _databaseCollection.UpdateManyAsync(expression, update);
         }
     }
 }
