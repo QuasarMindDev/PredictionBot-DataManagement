@@ -1,23 +1,24 @@
-﻿using System.Linq.Expressions;
+﻿using MongoDB.Driver;
+using System.Linq.Expressions;
 
 namespace PredictionBot_DataManagement_Infrastructure.Database.Repository
 {
     public interface IRepository<T> where T : class
     {
-        void Add(T entity);
+        Task AddAsync(T entity);
 
-        void AddRange(IEnumerable<T> entities);
+        Task AddRangeAsync(IEnumerable<T> entities);
 
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression);
 
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
 
-        IEnumerable<T> GetAll(Func<T, bool> filter);
+        Task UpdateOneAsync(Expression<Func<T, bool>> expression, UpdateDefinition<T> update);
 
-        T? GetById(string id);
+        Task UpdateManyAsync(Expression<Func<T, bool>> expression, UpdateDefinition<T> update);
 
-        void Remove(T entity);
+        Task RemoveManyAsync(Expression<Func<T, bool>> expression);
 
-        void RemoveRange(IEnumerable<T> entities);
+        Task RemoveOneAsync(Expression<Func<T, bool>> expression);
     }
 }

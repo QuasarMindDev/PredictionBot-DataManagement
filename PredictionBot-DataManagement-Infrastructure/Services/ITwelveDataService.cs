@@ -1,4 +1,4 @@
-﻿using PredictionBot_DataManagement_Domain.Dtos;
+﻿using PredictionBot_DataManagement_Infrastructure.Models.TwelveData.HistoricalData;
 
 namespace DataModuleInfrastructure.Services
 {

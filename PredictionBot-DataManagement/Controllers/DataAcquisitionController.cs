@@ -1,6 +1,6 @@
 using DataModuleInfrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using PredictionBot_DataManagement_Domain.Dtos;
+using PredictionBot_DataManagement_Infrastructure.Models.TwelveData.HistoricalData;
 
 namespace DataModule.Controllers
 {
@@ -18,9 +18,10 @@ namespace DataModule.Controllers
         }
 
         [HttpGet("HistoricalData")]
-        public async Task<HistoricalDataDto> GetHistoricalData(string currency, string interval)
+        public async Task<ActionResult<HistoricalDataDto>> GetHistoricalData(string currency, string interval)
         {
-            return await _dataService.DataSeries(currency, interval);
+            _logger.LogInformation("Getting historical data for {currency} with interval {interval}", currency, interval);
+            return Ok(await _dataService.DataSeries(currency, interval));
         }
     }
 }

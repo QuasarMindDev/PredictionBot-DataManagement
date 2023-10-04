@@ -1,8 +1,8 @@
-﻿using DataModuleInfrastructure.Models;
-using DataModuleInfrastructure.Services;
+﻿using DataModuleInfrastructure.Services;
 using Microsoft.Extensions.Options;
-using PredictionBot_DataManagement_Domain.Dtos;
-using PredictionBot_DataManagement_Domain.Exceptions;
+using PredictionBot_DataManagement_Domain.Commons;
+using PredictionBot_DataManagement_Infrastructure.Models.Configuration;
+using PredictionBot_DataManagement_Infrastructure.Models.TwelveData.HistoricalData;
 using PredictionBot_DataManagement_Infrastructure.Services;
 using System.Net.Http.Json;
 
@@ -16,7 +16,7 @@ namespace TwelveDataServices
 
         public TwelveDataService(IHistoricalDataService historicalDataService, IHttpClientFactory httpClient, IOptions<TwelveDataConnection> twelveDataOptions)
         {
-            _httpClient = httpClient.CreateClient("GetData");
+            _httpClient = httpClient.CreateClient(Constant.GetDataHttpClientName);
             _twelveDataOptions = twelveDataOptions.Value;
             _historicalDataService = historicalDataService;
         }
@@ -36,13 +36,12 @@ namespace TwelveDataServices
 
             if (historicalData == null || historicalData.Status != "ok")
             {
-                throw new DataCollectionException("Failed to retrieve exchange rate data from Twelve Data. No data returned.");
+                throw new HttpRequestException("Failed to retrieve exchange rate data from Twelve Data. No data returned.");
             }
 
             _historicalDataService.CreateHistoricalData(historicalData);
 
             return historicalData;
-
         }
     }
 }

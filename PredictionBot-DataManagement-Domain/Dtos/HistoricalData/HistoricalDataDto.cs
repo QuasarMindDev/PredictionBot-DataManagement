@@ -1,16 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using PredictionBot_DataManagement_Domain.Models.HistoricalData;
 
-namespace PredictionBot_DataManagement_Domain.Dtos
+namespace PredictionBot_DataManagement_Domain.Dtos.HistoricalData
 {
-    public record HistoricalDataDto
+    public record HistoricalDataDatabaseDto
     {
-        [JsonPropertyName("meta")]
-        public Meta Meta { get; set; }
-
-        [JsonPropertyName("values")]
-        public Value[] Values { get; set; }
-
-        [JsonPropertyName("status")]
-        public string Status { get; set; }
+        public IEnumerable<MarketData> MarketData { get; init; }
+        public Metadata Metadata { get; init; }
     }
 }
